@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class DBConnection {
 
-    private static final String URL =
+    private static final String DEFAULT_URL =
             "jdbc:mysql://localhost:3306/hirehub_db"
             + "?useSSL=false"
             + "&allowPublicKeyRetrieval=true"
@@ -14,9 +14,8 @@ public class DBConnection {
             + "&useUnicode=true"
             + "&characterEncoding=UTF-8";
 
-    private static final String USER = "root";
-
-    private static final String PASSWORD = "87358978";
+    private static final String DEFAULT_USER = "root";
+    private static final String DEFAULT_PASSWORD = "87358978";
 
     static {
         try {
@@ -30,6 +29,14 @@ public class DBConnection {
     }
 
     public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASSWORD);
+        String envUrl = System.getenv("DB_URL");
+        String envUser = System.getenv("DB_USER");
+        String envPassword = System.getenv("DB_PASSWORD");
+
+        String url = (envUrl != null && !envUrl.trim().isEmpty()) ? envUrl : DEFAULT_URL;
+        String user = (envUser != null && !envUser.trim().isEmpty()) ? envUser : DEFAULT_USER;
+        String password = (envPassword != null) ? envPassword : DEFAULT_PASSWORD;
+
+        return DriverManager.getConnection(url, user, password);
     }
 }

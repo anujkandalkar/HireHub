@@ -1044,3 +1044,103 @@ a:hover {
         padding: 16px;
     }
 }
+
+/* =========================================================
+   DOMAIN BACKGROUND IMAGERY & GLASSMOPHISIC OVERLAYS
+   ========================================================= */
+
+.bg-domain-tech {
+    background-image: radial-gradient(at 10% 20%, rgba(37, 99, 235, 0.12) 0px, transparent 50%),
+                      radial-gradient(at 90% 80%, rgba(6, 182, 212, 0.12) 0px, transparent 50%),
+                      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%233b82f6' fill-opacity='0.03' fill-rule='evenodd'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.bg-domain-auth {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.94) 0%, rgba(30, 27, 75, 0.92) 100%),
+                url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3z' fill='%2360a5fa' fill-opacity='0.04' fill-rule='evenodd'/%3E%3C/svg%3E");
+    background-attachment: fixed;
+}
+
+.glass-auth-card {
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 20px 60px -10px rgba(15, 23, 42, 0.18), 0 8px 24px -5px rgba(37, 99, 235, 0.12);
+    border-radius: var(--radius-lg);
+    transition: var(--transition);
+}
+
+.glass-auth-card:hover {
+    border-color: rgba(37, 99, 235, 0.3);
+    box-shadow: 0 24px 70px -10px rgba(15, 23, 42, 0.22), 0 12px 30px -5px rgba(37, 99, 235, 0.18);
+}
+
+.glass-modal-content {
+    background: rgba(255, 255, 255, 0.96) !important;
+    backdrop-filter: blur(24px) !important;
+    -webkit-backdrop-filter: blur(24px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.8) !important;
+    box-shadow: 0 25px 60px -10px rgba(15, 23, 42, 0.3) !important;
+    border-radius: var(--radius-lg) !important;
+}
+
+.hover-lift {
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.hover-glow:hover {
+    box-shadow: var(--shadow-glow) !important;
+}
+
+/* Status Indicator Dots */
+.status-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.status-dot-active {
+    background-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+    animation: pulse-ring 2s infinite;
+}
+
+.status-dot-pending {
+    background-color: #f59e0b;
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.25);
+}
+
+.status-dot-danger {
+    background-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25);
+}
+
+@keyframes pulse-ring {
+    0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+    70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+/* Accessibility Focus Ring Standards */
+:focus-visible {
+    outline: 3px solid #2563eb !important;
+    outline-offset: 2px !important;
+}
+
+/* Reduced Motion Compliance */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
