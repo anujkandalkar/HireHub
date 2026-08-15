@@ -29,8 +29,9 @@
             </form>
         </div>
 
-        <div class="glass-card overflow-hidden">
-            <div class="table-responsive">
+        <!-- Glass Card Container with Dropdown Overflow Support -->
+        <div class="glass-card p-0">
+            <div class="table-responsive table-responsive-dropdown">
                 <table class="table table-hover align-middle mb-0">
                     <thead class="bg-light">
                         <tr>
@@ -39,7 +40,7 @@
                             <th>Candidate Resume</th>
                             <th>Applied Date</th>
                             <th>Status</th>
-                            <th class="text-end pe-4">Actions</th>
+                            <th class="text-end pe-4">Pipeline Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -71,66 +72,91 @@
                                 <td class="small text-muted"><%= app.getAppliedDate() %></td>
                                 <td><span class="badge <%= badgeColor %> px-3 py-1.5 rounded-pill"><%= st.replace('_', ' ') %></span></td>
                                 <td class="text-end pe-4">
-                                    <div class="dropdown d-inline-block">
-                                        <button class="btn btn-sm btn-outline-primary rounded-pill dropdown-toggle shadow-sm" type="button" data-bs-toggle="dropdown">
-                                            Actions
+                                    <!-- Direct Quick Action Icons + Popper Window Boundary Dropdown -->
+                                    <div class="d-inline-flex align-items-center gap-1">
+                                        <!-- Quick Shortlist Button -->
+                                        <form action="${pageContext.request.contextPath}/update-application-status" method="post" class="d-inline">
+                                            <input type="hidden" name="applicationId" value="<%= app.getId() %>">
+                                            <input type="hidden" name="status" value="SHORTLISTED">
+                                            <button type="submit" class="btn btn-sm btn-outline-warning rounded-circle d-flex align-items-center justify-content-center" style="width:34px; height:34px;" title="Shortlist Candidate">
+                                                <i class="bi bi-star-fill"></i>
+                                            </button>
+                                        </form>
+
+                                        <!-- Quick Task Modal Trigger -->
+                                        <button type="button" class="btn btn-sm btn-outline-primary rounded-circle d-flex align-items-center justify-content-center" style="width:34px; height:34px;" data-bs-toggle="modal" data-bs-target="#taskModal<%= app.getId() %>" title="Assign Task">
+                                            <i class="bi bi-code-slash"></i>
                                         </button>
-                                        <ul class="dropdown-menu dropdown-menu-end shadow-lg">
-                                            <li>
-                                                <a href="${pageContext.request.contextPath}/resume/view?studentId=<%= app.getStudentId() %>" target="_blank" class="dropdown-item">
-                                                    <i class="bi bi-file-earmark-pdf me-2 text-danger"></i>View Candidate Resume
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="${pageContext.request.contextPath}/resume/download?studentId=<%= app.getStudentId() %>" class="dropdown-item">
-                                                    <i class="bi bi-download me-2 text-secondary"></i>Download Resume File
-                                                </a>
-                                            </li>
-                                            <li><hr class="dropdown-divider my-1"></li>
 
-                                            <li>
-                                                <form action="${pageContext.request.contextPath}/update-application-status" method="post">
-                                                    <input type="hidden" name="applicationId" value="<%= app.getId() %>">
-                                                    <input type="hidden" name="status" value="SHORTLISTED">
-                                                    <button type="submit" class="dropdown-item"><i class="bi bi-star me-2 text-warning"></i>Shortlist Candidate</button>
-                                                </form>
-                                            </li>
+                                        <!-- Quick Interview Modal Trigger -->
+                                        <button type="button" class="btn btn-sm btn-outline-info rounded-circle d-flex align-items-center justify-content-center" style="width:34px; height:34px;" data-bs-toggle="modal" data-bs-target="#interviewModal<%= app.getId() %>" title="Schedule Interview">
+                                            <i class="bi bi-calendar-event"></i>
+                                        </button>
 
-                                            <li>
-                                                <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#taskModal<%= app.getId() %>">
-                                                    <i class="bi bi-file-earmark-code me-2 text-primary"></i>Assign Technical Task
-                                                </button>
-                                            </li>
+                                        <!-- Dropdown Menu with Viewport Boundary (Popper prevents clipping) -->
+                                        <div class="dropdown d-inline-block">
+                                            <button class="btn btn-sm btn-primary rounded-pill dropdown-toggle shadow-sm px-3" type="button" data-bs-toggle="dropdown" data-bs-boundary="viewport" aria-expanded="false">
+                                                Actions
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-end shadow-lg">
+                                                <li class="dropdown-header text-uppercase small fw-bold text-muted px-3 py-1">Candidate Files</li>
+                                                <li>
+                                                    <a href="${pageContext.request.contextPath}/resume/view?studentId=<%= app.getStudentId() %>" target="_blank" class="dropdown-item">
+                                                        <i class="bi bi-file-earmark-pdf text-danger me-2"></i>View Resume PDF
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="${pageContext.request.contextPath}/resume/download?studentId=<%= app.getStudentId() %>" class="dropdown-item">
+                                                        <i class="bi bi-download text-secondary me-2"></i>Download Resume File
+                                                    </a>
+                                                </li>
+                                                <li><hr class="dropdown-divider my-1"></li>
 
-                                            <li>
-                                                <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#interviewModal<%= app.getId() %>">
-                                                    <i class="bi bi-calendar-event me-2 text-info"></i>Schedule Interview
-                                                </button>
-                                            </li>
+                                                <li class="dropdown-header text-uppercase small fw-bold text-muted px-3 py-1">Recruitment Actions</li>
+                                                <li>
+                                                    <form action="${pageContext.request.contextPath}/update-application-status" method="post">
+                                                        <input type="hidden" name="applicationId" value="<%= app.getId() %>">
+                                                        <input type="hidden" name="status" value="SHORTLISTED">
+                                                        <button type="submit" class="dropdown-item"><i class="bi bi-star me-2 text-warning"></i>Shortlist Candidate</button>
+                                                    </form>
+                                                </li>
 
-                                            <li>
-                                                <form action="${pageContext.request.contextPath}/update-application-status" method="post">
-                                                    <input type="hidden" name="applicationId" value="<%= app.getId() %>">
-                                                    <input type="hidden" name="status" value="SELECTED">
-                                                    <button type="submit" class="dropdown-item"><i class="bi bi-check-circle me-2 text-success"></i>Select / Offer Position</button>
-                                                </form>
-                                            </li>
+                                                <li>
+                                                    <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#taskModal<%= app.getId() %>">
+                                                        <i class="bi bi-file-earmark-code me-2 text-primary"></i>Assign Technical Task
+                                                    </button>
+                                                </li>
 
-                                            <li>
-                                                <form action="${pageContext.request.contextPath}/update-application-status" method="post">
-                                                    <input type="hidden" name="applicationId" value="<%= app.getId() %>">
-                                                    <input type="hidden" name="status" value="REJECTED">
-                                                    <button type="submit" class="dropdown-item text-danger"><i class="bi bi-x-circle me-2"></i>Reject Application</button>
-                                                </form>
-                                            </li>
+                                                <li>
+                                                    <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#interviewModal<%= app.getId() %>">
+                                                        <i class="bi bi-calendar-event me-2 text-info"></i>Schedule Interview Round
+                                                    </button>
+                                                </li>
 
-                                            <li><hr class="dropdown-divider my-1"></li>
-                                            <li>
-                                                <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#msgModal<%= app.getId() %>">
-                                                    <i class="bi bi-envelope me-2"></i>Send Message
-                                                </button>
-                                            </li>
-                                        </ul>
+                                                <li>
+                                                    <form action="${pageContext.request.contextPath}/update-application-status" method="post">
+                                                        <input type="hidden" name="applicationId" value="<%= app.getId() %>">
+                                                        <input type="hidden" name="status" value="SELECTED">
+                                                        <button type="submit" class="dropdown-item"><i class="bi bi-check-circle me-2 text-success"></i>Select / Offer Position</button>
+                                                    </form>
+                                                </li>
+
+                                                <li>
+                                                    <form action="${pageContext.request.contextPath}/update-application-status" method="post">
+                                                        <input type="hidden" name="applicationId" value="<%= app.getId() %>">
+                                                        <input type="hidden" name="status" value="REJECTED">
+                                                        <button type="submit" class="dropdown-item text-danger"><i class="bi bi-x-circle me-2"></i>Reject Application</button>
+                                                    </form>
+                                                </li>
+
+                                                <li><hr class="dropdown-divider my-1"></li>
+                                                <li>
+                                                    <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#msgModal<%= app.getId() %>">
+                                                        <i class="bi bi-envelope me-2 text-primary"></i>Send Response Message
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
 
                                     <!-- TASK MODAL -->

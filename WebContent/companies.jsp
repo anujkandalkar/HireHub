@@ -15,12 +15,9 @@
                 <p class="text-muted mb-0">Browse verified employers, explore company cultures, and view open positions.</p>
             </div>
             <div class="col-lg-5">
-                <form action="${pageContext.request.contextPath}/companies" method="get" class="d-flex gap-2">
-                    <div class="input-group">
-                        <span class="input-group-text bg-white"><i class="bi bi-search text-primary"></i></span>
-                        <input type="text" name="search" class="form-control" placeholder="Search company name..." value="<%= request.getAttribute("search") != null ? request.getAttribute("search") : "" %>">
-                    </div>
-                    <button type="submit" class="btn btn-primary px-4 fw-bold">Search</button>
+                <form action="${pageContext.request.contextPath}/companies" method="get" class="d-flex flex-column flex-sm-row gap-2">
+                    <input type="text" name="search" class="form-control flex-grow-1" placeholder="Search company name..." value="<%= request.getAttribute("search") != null ? request.getAttribute("search") : "" %>">
+                    <button type="submit" class="btn btn-primary px-4 fw-bold shadow-sm" style="height: 48px; white-space: nowrap;">Search</button>
                 </form>
             </div>
         </div>

@@ -25,6 +25,95 @@ public class UserDAO {
         return null;
     }
 
+    public User findByEmailAndRole(String email, String role) {
+        if (role == null || role.trim().isEmpty()) {
+            return findByEmail(email);
+        }
+        String sql = "SELECT * FROM users WHERE LOWER(email) = LOWER(?) AND role = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, email.trim());
+            ps.setString(2, role.trim().toUpperCase());
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return extractUserFromRS(rs);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public User findByPhoneAndRole(String phone, String role) {
+        if (phone == null || phone.trim().isEmpty()) return null;
+        String cleanPhone = phone.replaceAll("[^0-9]", "");
+        if (cleanPhone.isEmpty()) return null;
+
+        String sql;
+        if ("STUDENT".equalsIgnoreCase(role)) {
+            sql = "SELECT u.* FROM users u JOIN students s ON u.id = s.user_id WHERE REPLACE(REPLACE(REPLACE(s.phone, '-', ''), ' ', ''), '+', '') LIKE ? AND u.role = 'STUDENT'";
+        } else if ("COMPANY".equalsIgnoreCase(role)) {
+            sql = "SELECT u.* FROM users u JOIN companies c ON u.id = c.user_id WHERE REPLACE(REPLACE(REPLACE(c.phone, '-', ''), ' ', ''), '+', '') LIKE ? AND u.role = 'COMPANY'";
+        } else {
+            sql = "SELECT u.* FROM users u LEFT JOIN students s ON u.id = s.user_id LEFT JOIN companies c ON u.id = c.user_id " +
+                  "WHERE REPLACE(REPLACE(REPLACE(s.phone, '-', ''), ' ', ''), '+', '') LIKE ? OR REPLACE(REPLACE(REPLACE(c.phone, '-', ''), ' ', ''), '+', '') LIKE ?";
+        }
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, "%" + cleanPhone + "%");
+            if (!"STUDENT".equalsIgnoreCase(role) && !"COMPANY".equalsIgnoreCase(role)) {
+                ps.setString(2, "%" + cleanPhone + "%");
+            }
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return extractUserFromRS(rs);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public User findByEmailPhoneAndRole(String email, String phone, String role) {
+        if (email == null || email.trim().isEmpty() || phone == null || phone.trim().isEmpty()) {
+            return null;
+        }
+        String cleanPhone = phone.replaceAll("[^0-9]", "");
+        if (cleanPhone.isEmpty()) return null;
+
+        String sql;
+        if ("STUDENT".equalsIgnoreCase(role)) {
+            sql = "SELECT u.* FROM users u JOIN students s ON u.id = s.user_id " +
+                  "WHERE LOWER(u.email) = LOWER(?) AND REPLACE(REPLACE(REPLACE(s.phone, '-', ''), ' ', ''), '+', '') LIKE ? AND u.role = 'STUDENT'";
+        } else if ("COMPANY".equalsIgnoreCase(role)) {
+            sql = "SELECT u.* FROM users u JOIN companies c ON u.id = c.user_id " +
+                  "WHERE LOWER(u.email) = LOWER(?) AND REPLACE(REPLACE(REPLACE(c.phone, '-', ''), ' ', ''), '+', '') LIKE ? AND u.role = 'COMPANY'";
+        } else {
+            sql = "SELECT u.* FROM users u LEFT JOIN students s ON u.id = s.user_id LEFT JOIN companies c ON u.id = c.user_id " +
+                  "WHERE LOWER(u.email) = LOWER(?) AND (REPLACE(REPLACE(REPLACE(s.phone, '-', ''), ' ', ''), '+', '') LIKE ? OR REPLACE(REPLACE(REPLACE(c.phone, '-', ''), ' ', ''), '+', '') LIKE ?)";
+        }
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, email.trim());
+            ps.setString(2, "%" + cleanPhone + "%");
+            if (!"STUDENT".equalsIgnoreCase(role) && !"COMPANY".equalsIgnoreCase(role)) {
+                ps.setString(3, "%" + cleanPhone + "%");
+            }
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return extractUserFromRS(rs);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public User findById(int id) {
         String sql = "SELECT * FROM users WHERE id = ?";
         try (Connection conn = DBConnection.getConnection();

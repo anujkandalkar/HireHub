@@ -46,9 +46,6 @@
                         <i class="bi bi-shield-lock-fill text-success fs-5"></i>
                         <span class="fw-bold text-white small">Verified Enterprise Operations</span>
                     </div>
-                    <p class="mb-0 text-muted" style="font-size: 0.775rem; color: #94a3b8 !important;">
-                        Built with Java Servlets, JDBC & MySQL. Admin verification ensures all active company job postings are pre-screened.
-                    </p>
                 </div>
             </div>
         </div>

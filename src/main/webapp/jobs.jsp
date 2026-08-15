@@ -6,38 +6,42 @@
 %>
 <jsp:include page="/includes/header.jsp" />
 
-<section class="job-search-toolbar">
+<section class="py-4">
     <div class="container">
-        <form action="${pageContext.request.contextPath}/jobs" method="get" class="row g-3 align-items-end">
-            <div class="col-lg-4">
-                <label class="form-label fw-bold small mb-1">What</label>
-                <div class="input-group">
-                    <span class="input-group-text bg-white"><i class="bi bi-search text-primary"></i></span>
-                    <input type="text" name="keyword" class="form-control" placeholder="Job title, keywords, company" value="<%= request.getAttribute("keyword") != null ? request.getAttribute("keyword") : "" %>">
+        <div class="search-section-card">
+            <form action="${pageContext.request.contextPath}/jobs" method="get" class="row g-3 align-items-end">
+                <div class="col-lg-4 col-md-5">
+                    <label class="form-label"><i class="bi bi-search me-1 text-primary"></i>What</label>
+                    <div class="search-input-box">
+                        <i class="bi bi-search search-input-icon text-primary"></i>
+                        <input type="text" name="keyword" class="form-control" placeholder="Job title, keywords, or company" value="<%= request.getAttribute("keyword") != null ? request.getAttribute("keyword") : "" %>">
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-3">
-                <label class="form-label fw-bold small mb-1">Where</label>
-                <div class="input-group">
-                    <span class="input-group-text bg-white"><i class="bi bi-geo-alt text-primary"></i></span>
-                    <input type="text" name="location" class="form-control" placeholder="City, state, remote" value="<%= request.getAttribute("location") != null ? request.getAttribute("location") : "" %>">
+                <div class="col-lg-3 col-md-4">
+                    <label class="form-label"><i class="bi bi-geo-alt me-1 text-info"></i>Where</label>
+                    <div class="search-input-box">
+                        <i class="bi bi-geo-alt search-input-icon text-info"></i>
+                        <input type="text" name="location" class="form-control" placeholder="City, state, or remote" value="<%= request.getAttribute("location") != null ? request.getAttribute("location") : "" %>">
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-3">
-                <label class="form-label fw-bold small mb-1">Job Type</label>
-                <select name="jobType" class="form-select">
-                    <option value="">All Job Types</option>
-                    <option value="FULL_TIME" <%= "FULL_TIME".equals(request.getAttribute("jobType")) ? "selected" : "" %>>Full Time</option>
-                    <option value="PART_TIME" <%= "PART_TIME".equals(request.getAttribute("jobType")) ? "selected" : "" %>>Part Time</option>
-                    <option value="INTERNSHIP" <%= "INTERNSHIP".equals(request.getAttribute("jobType")) ? "selected" : "" %>>Internship</option>
-                    <option value="CONTRACT" <%= "CONTRACT".equals(request.getAttribute("jobType")) ? "selected" : "" %>>Contract</option>
-                </select>
-            </div>
-            <div class="col-lg-2">
-                <button type="submit" class="btn btn-primary w-100 fw-bold">Find Jobs</button>
-            </div>
-            <input type="hidden" name="sort" value="<%= request.getAttribute("sort") != null ? request.getAttribute("sort") : "NEWEST" %>">
-        </form>
+                <div class="col-lg-3 col-md-3">
+                    <label class="form-label"><i class="bi bi-briefcase me-1 text-secondary"></i>Job Type</label>
+                    <select name="jobType" class="form-select search-select-control">
+                        <option value="">All Job Types</option>
+                        <option value="FULL_TIME" <%= "FULL_TIME".equals(request.getAttribute("jobType")) ? "selected" : "" %>>Full Time</option>
+                        <option value="PART_TIME" <%= "PART_TIME".equals(request.getAttribute("jobType")) ? "selected" : "" %>>Part Time</option>
+                        <option value="INTERNSHIP" <%= "INTERNSHIP".equals(request.getAttribute("jobType")) ? "selected" : "" %>>Internship</option>
+                        <option value="CONTRACT" <%= "CONTRACT".equals(request.getAttribute("jobType")) ? "selected" : "" %>>Contract</option>
+                    </select>
+                </div>
+                <div class="col-lg-2 col-md-12">
+                    <button type="submit" class="btn search-btn-primary w-100">
+                        <i class="bi bi-search me-1"></i>Find Jobs
+                    </button>
+                </div>
+                <input type="hidden" name="sort" value="<%= request.getAttribute("sort") != null ? request.getAttribute("sort") : "NEWEST" %>">
+            </form>
+        </div>
     </div>
 </section>
 

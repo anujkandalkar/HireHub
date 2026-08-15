@@ -43,6 +43,10 @@ public class InterviewServlet extends HttpServlet {
         }
 
         Company company = companyDAO.findByUserId(user.getId());
+        if (company == null) {
+            resp.sendRedirect(req.getContextPath() + "/login.jsp");
+            return;
+        }
 
         try {
             int appId = Integer.parseInt(req.getParameter("applicationId"));
@@ -65,10 +69,11 @@ public class InterviewServlet extends HttpServlet {
             interview.setStudentId(app.getStudentId());
             interview.setInterviewDate(Date.valueOf(dateStr.trim()));
 
-            // Format time properly (HH:mm or HH:mm:ss)
-            if (timeStr != null && timeStr.length() == 5) timeStr += ":00";
+            if (timeStr != null && timeStr.trim().length() == 5) {
+                timeStr = timeStr.trim() + ":00";
+            }
             interview.setInterviewTime(Time.valueOf(timeStr.trim()));
-            interview.setInterviewType(type.isEmpty() ? "ONLINE" : type);
+            interview.setInterviewType(type == null || type.trim().isEmpty() ? "ONLINE" : type.trim());
             interview.setMeetingLink(link);
             interview.setInterviewerName(interviewer);
             interview.setNotes(notes);
@@ -83,7 +88,7 @@ public class InterviewServlet extends HttpServlet {
                     Notification notif = new Notification(
                         student.getUserId(),
                         "Interview Scheduled",
-                        company.getCompanyName() + " scheduled an interview on " + dateStr + " at " + timeStr,
+                        company.getCompanyName() + " scheduled an interview for " + app.getJobTitle() + " on " + dateStr + " at " + timeStr,
                         "SUCCESS"
                     );
                     notificationDAO.createNotification(notif);

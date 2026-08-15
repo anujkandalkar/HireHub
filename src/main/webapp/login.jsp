@@ -27,7 +27,7 @@
                         <div class="mb-4">
                             <div class="d-flex justify-content-between align-items-center mb-1">
                                 <label class="form-label fw-semibold mb-0">Password</label>
-                                <a href="#" class="small text-decoration-none text-primary">Forgot password?</a>
+                                <a href="${pageContext.request.contextPath}/forgot-password" class="small text-decoration-none text-primary fw-semibold">Forgot password?</a>
                             </div>
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="bi bi-key"></i></span>

@@ -13,9 +13,12 @@
                 <h3 class="fw-bold text-dark mb-1">System Job Moderation & Management</h3>
                 <p class="text-muted mb-0">Oversee all jobs published across HireHub, toggle active visibility, or delete inappropriate listings</p>
             </div>
-            <form action="${pageContext.request.contextPath}/admin/jobs" method="get" class="d-flex gap-2">
-                <input type="text" name="search" class="form-control rounded-pill px-3" placeholder="Search job title or company..." value="<%= request.getAttribute("search") != null ? request.getAttribute("search") : "" %>">
-                <button type="submit" class="btn btn-primary rounded-pill px-4 shadow-sm">Search</button>
+            <form action="${pageContext.request.contextPath}/admin/jobs" method="get" class="d-flex flex-column flex-sm-row gap-2">
+                <div class="search-field">
+                    <i class="bi bi-search search-icon text-primary"></i>
+                    <input type="text" name="search" class="form-control" placeholder="Search job title or company..." value="<%= request.getAttribute("search") != null ? request.getAttribute("search") : "" %>">
+                </div>
+                <button type="submit" class="btn btn-primary rounded-pill px-4 shadow-sm" style="height: 48px; white-space: nowrap;">Search</button>
             </form>
         </div>
 

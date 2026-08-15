@@ -19,7 +19,7 @@
                         <div class="mb-3">
                             <label class="form-label fw-semibold">Email Address</label>
                             <div class="input-group">
-                                <span class="input-group-text bg-white"><i class="bi bi-envelope text-primary"></i></span>
+                                <span class="input-group-text"><i class="bi bi-envelope text-primary"></i></span>
                                 <input type="email" name="email" class="form-control" placeholder="name@example.com" value="<%= request.getAttribute("email") != null ? request.getAttribute("email") : "" %>" autocomplete="off" required>
                             </div>
                         </div>
@@ -27,10 +27,10 @@
                         <div class="mb-4">
                             <div class="d-flex justify-content-between align-items-center mb-1">
                                 <label class="form-label fw-semibold mb-0">Password</label>
-                                <a href="#" class="small text-decoration-none text-primary">Forgot password?</a>
+                                <a href="${pageContext.request.contextPath}/forgot-password" class="small text-decoration-none text-primary fw-semibold">Forgot password?</a>
                             </div>
                             <div class="input-group">
-                                <span class="input-group-text bg-white"><i class="bi bi-key text-primary"></i></span>
+                                <span class="input-group-text"><i class="bi bi-key text-primary"></i></span>
                                 <input type="password" name="password" id="loginPassword" class="form-control" placeholder="Enter password" autocomplete="new-password" required>
                                 <button type="button" class="btn btn-outline-secondary" id="toggleLoginPassword" aria-label="Show password">
                                     <i class="bi bi-eye"></i>

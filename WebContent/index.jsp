@@ -39,34 +39,33 @@
 
                     <!-- Glass Search Box Panel -->
                     <div class="hero-search-panel text-start">
-                        <form action="${pageContext.request.contextPath}/jobs" method="get" class="row g-3 align-items-center">
+                        <form action="${pageContext.request.contextPath}/jobs" method="get" class="row g-3 align-items-end">
                             <div class="col-lg-5 col-md-6">
-                                <label class="form-label fw-bold small mb-1"><i class="bi bi-search me-1 text-primary"></i>What</label>
-                                <div class="input-group">
-                                    <span class="input-group-text bg-white border-0"><i class="bi bi-search text-primary"></i></span>
-                                    <input type="text" name="keyword" class="form-control border-0" placeholder="Job title, skills, or company name">
+                                <label class="form-label"><i class="bi bi-search me-1 text-primary"></i>What</label>
+                                <div class="search-input-box">
+                                    <i class="bi bi-search search-input-icon text-primary"></i>
+                                    <input type="text" name="keyword" class="form-control" placeholder="Job title, keywords, or company">
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6">
-                                <label class="form-label fw-bold small mb-1"><i class="bi bi-geo-alt me-1 text-info"></i>Where</label>
-                                <div class="input-group">
-                                    <span class="input-group-text bg-white border-0"><i class="bi bi-geo-alt text-info"></i></span>
-                                    <input type="text" name="location" class="form-control border-0" placeholder="City, state, or Remote">
+                                <label class="form-label"><i class="bi bi-geo-alt me-1 text-info"></i>Where</label>
+                                <div class="search-input-box">
+                                    <i class="bi bi-geo-alt search-input-icon text-info"></i>
+                                    <input type="text" name="location" class="form-control" placeholder="City, state, or remote">
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-12">
-                                <label class="form-label fw-bold small mb-1 d-none d-lg-block">&nbsp;</label>
-                                <button type="submit" class="btn btn-primary w-100 py-2.5 fw-bold shadow-lg">
+                                <button type="submit" class="btn search-btn-primary w-100">
                                     <i class="bi bi-search me-1"></i>Find Jobs
                                 </button>
                             </div>
-                            <div class="col-12">
+                            <div class="col-12 pt-1">
                                 <div class="d-flex flex-wrap justify-content-center justify-content-lg-start gap-2 pt-2">
-                                    <span class="text-white-50 small align-self-center me-2">Popular searches:</span>
-                                    <a class="quick-search-link" href="${pageContext.request.contextPath}/jobs?jobType=FULL_TIME"><i class="bi bi-briefcase me-1"></i>Full-time</a>
+                                    <span class="text-white-50 small align-self-center me-2"><i class="bi bi-fire text-warning me-1"></i>Popular:</span>
+                                    <a class="quick-search-link" href="${pageContext.request.contextPath}/jobs?jobType=FULL_TIME"><i class="bi bi-briefcase me-1"></i>Full-time jobs</a>
                                     <a class="quick-search-link" href="${pageContext.request.contextPath}/jobs?jobType=INTERNSHIP"><i class="bi bi-mortarboard me-1"></i>Internships</a>
                                     <a class="quick-search-link" href="${pageContext.request.contextPath}/jobs?location=Remote"><i class="bi bi-laptop me-1"></i>Remote</a>
-                                    <a class="quick-search-link" href="${pageContext.request.contextPath}/companies"><i class="bi bi-building me-1"></i>Top Employers</a>
+                                    <a class="quick-search-link" href="${pageContext.request.contextPath}/companies"><i class="bi bi-building me-1"></i>Browse companies</a>
                                 </div>
                             </div>
                         </form>

@@ -219,14 +219,15 @@ a:hover {
 
 /* Dropdown styling */
 .dropdown-menu {
-    background: rgba(255, 255, 255, 0.94);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(226, 232, 240, 0.9);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-lg);
+    background: rgba(255, 255, 255, 0.98) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(203, 213, 225, 0.9) !important;
+    border-radius: var(--radius-md) !important;
+    box-shadow: 0 16px 45px -5px rgba(15, 23, 42, 0.18), 0 6px 16px rgba(15, 23, 42, 0.08) !important;
     padding: 0.6rem;
-    margin-top: 8px;
+    margin-top: 6px;
+    z-index: 1070 !important;
     animation: fadeInDown 0.2s ease-out;
 }
 
@@ -236,17 +237,39 @@ a:hover {
 }
 
 .dropdown-item {
-    font-weight: 500;
-    font-size: 0.9rem;
+    font-weight: 600;
+    font-size: 0.875rem;
     padding: 0.55rem 0.9rem;
     border-radius: var(--radius-sm);
     color: #334155;
     transition: var(--transition-fast);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .dropdown-item:hover {
     background: rgba(37, 99, 235, 0.08);
     color: var(--primary-color);
+}
+
+.dropdown-item.text-danger:hover {
+    background: rgba(239, 68, 68, 0.08);
+    color: var(--danger-color);
+}
+
+/* Table Dropdown Clipping & Stacking Fixes */
+.table-responsive-dropdown {
+    min-height: 280px;
+    position: relative;
+}
+
+.table tbody tr {
+    position: relative;
+}
+
+.table td .dropdown-menu {
+    min-width: 230px;
 }
 
 /* =========================================================
@@ -309,51 +332,202 @@ a:hover {
     margin-bottom: 2rem;
 }
 
-/* Glass Search Panel */
+/* Glass Search Panel & Card */
 .indeed-search-panel,
 .hero-search-panel {
-    background: rgba(255, 255, 255, 0.1) !important;
-    backdrop-filter: blur(24px) !important;
-    -webkit-backdrop-filter: blur(24px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    background: rgba(255, 255, 255, 0.14) !important;
+    backdrop-filter: blur(28px) !important;
+    -webkit-backdrop-filter: blur(28px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
     border-radius: var(--radius-lg) !important;
-    padding: 24px;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3) !important;
+    padding: 28px 24px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35) !important;
 }
 
-.indeed-search-panel label,
-.hero-search-panel label {
-    color: #e2e8f0;
-}
-
-.indeed-search-panel .form-control,
-.indeed-search-panel .form-select,
-.hero-search-panel .form-control,
-.hero-search-panel .form-select {
-    background: rgba(255, 255, 255, 0.95);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.04);
-}
-
-.quick-search-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    color: #93c5fd;
-    font-weight: 600;
-    font-size: 0.875rem;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    padding: 0.4rem 1rem;
-    border-radius: var(--radius-pill);
+.search-section-card {
+    background: #ffffff !important;
+    border: 1px solid rgba(226, 232, 240, 0.9) !important;
+    border-radius: var(--radius-lg) !important;
+    padding: 28px 24px;
+    box-shadow: var(--shadow-md) !important;
     transition: var(--transition);
 }
 
-.quick-search-link:hover {
-    color: #ffffff;
+.search-section-card:hover {
+    box-shadow: var(--shadow-lg) !important;
+    border-color: rgba(37, 99, 235, 0.3) !important;
+}
+
+.indeed-search-panel label,
+.hero-search-panel label,
+.search-section-card label,
+.job-search-toolbar label {
+    font-weight: 700 !important;
+    font-size: 0.875rem !important;
+    letter-spacing: 0.01em !important;
+    margin-bottom: 0.45rem !important;
+}
+
+.hero-search-panel label {
+    color: #f1f5f9 !important;
+}
+
+.search-section-card label,
+.job-search-toolbar label {
+    color: #1e293b !important;
+}
+
+/* =========================================================
+   SEAMLESS SEARCH FIELD COMPONENT (NO SPLIT BORDERS)
+   ========================================================= */
+
+.search-input-box,
+.search-field {
+    position: relative !important;
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.search-input-box .search-input-icon,
+.search-field .search-icon {
+    position: absolute !important;
+    left: 16px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    z-index: 5 !important;
+    pointer-events: none !important;
+    font-size: 1.15rem !important;
+    line-height: 1 !important;
+    margin: 0 !important;
+    transition: var(--transition-fast) !important;
+}
+
+.search-input-box .form-control,
+.search-input-box .search-input-control,
+.search-field .form-control,
+.search-field input[type="text"] {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding-left: 48px !important;
+    padding-right: 16px !important;
+    height: 52px !important;
+    min-height: 52px !important;
+    border-radius: 12px !important;
+    border: 1.5px solid #cbd5e1 !important;
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    font-weight: 500 !important;
+    font-size: 0.95rem !important;
+    margin: 0 !important;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04) !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.search-select-control {
+    height: 52px !important;
+    min-height: 52px !important;
+    border-radius: 12px !important;
+    border: 1.5px solid #cbd5e1 !important;
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    font-weight: 500 !important;
+    font-size: 0.95rem !important;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04) !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.search-input-box .form-control:focus,
+.search-input-box .search-input-control:focus,
+.search-field .form-control:focus,
+.search-field input[type="text"]:focus,
+.search-select-control:focus {
+    border-color: #2563eb !important;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.16), 0 4px 12px rgba(37, 99, 235, 0.08) !important;
+    background-color: #ffffff !important;
+    outline: none !important;
+}
+
+.search-input-box .form-control:hover,
+.search-field .form-control:hover,
+.search-select-control:hover {
+    border-color: #94a3b8 !important;
+}
+
+.search-input-box .form-control::placeholder,
+.search-field input[type="text"]::placeholder {
+    color: #64748b !important;
+    font-weight: 400 !important;
+}
+
+/* Elevated Primary Action Button */
+.search-btn-primary {
+    height: 52px !important;
+    border-radius: 12px !important;
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+    border: none !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    letter-spacing: 0.01em !important;
+    box-shadow: 0 8px 20px -2px rgba(37, 99, 235, 0.38) !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+}
+
+.search-btn-primary:hover {
+    background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 12px 28px -2px rgba(37, 99, 235, 0.48) !important;
+    color: #ffffff !important;
+}
+
+.search-btn-primary:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3) !important;
+}
+
+/* Quick Search Pill Badges */
+.quick-search-link,
+.search-quick-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: #bfdbfe;
+    font-weight: 600;
+    font-size: 0.85rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.45rem 1.1rem;
+    border-radius: var(--radius-pill);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none !important;
+}
+
+.quick-search-link:hover,
+.search-quick-pill:hover {
+    color: #ffffff !important;
     background: var(--primary-color);
     border-color: var(--primary-color);
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.search-section-card .quick-search-link,
+.search-section-card .search-quick-pill {
+    color: #334155;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+}
+
+.search-section-card .quick-search-link:hover,
+.search-section-card .search-quick-pill:hover {
+    color: #ffffff !important;
+    background: var(--primary-color);
+    border-color: var(--primary-color);
 }
 
 /* =========================================================
@@ -608,13 +782,15 @@ a:hover {
 
 .form-control,
 .form-select {
-    border-radius: var(--radius-sm) !important;
+    border-radius: var(--radius-md) !important;
     border: 1px solid #cbd5e1;
     padding: 0.65rem 1rem;
-    font-size: 0.925rem;
+    font-size: 0.95rem;
+    font-weight: 500;
     transition: var(--transition);
     background-color: #ffffff;
-    min-height: 44px;
+    min-height: 48px;
+    box-sizing: border-box;
 }
 
 .form-control:focus,
@@ -624,11 +800,41 @@ a:hover {
     background-color: #ffffff;
 }
 
-.input-group-text {
+/* Unified Input Group Styling (Fixes overlapping icon & input boxes) */
+.input-group {
+    background: #ffffff !important;
     border-radius: var(--radius-sm) !important;
-    border-color: #cbd5e1;
-    background-color: #f8fafc;
+    border: 1px solid #cbd5e1 !important;
+    overflow: hidden !important;
+    display: flex !important;
+    align-items: center !important;
+    transition: var(--transition-fast);
+}
+
+.input-group:focus-within {
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25) !important;
+}
+
+.input-group > .input-group-text {
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    padding-right: 0.25rem !important;
+    padding-left: 0.75rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     color: #64748b;
+}
+
+.input-group > .form-control,
+.input-group > .form-select {
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding-left: 0.5rem !important;
 }
 
 .form-label {

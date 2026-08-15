@@ -919,37 +919,171 @@ body {
     text-align: center;
 }
 
-.indeed-search-panel {
+.indeed-search-panel,
+.search-section-card {
     max-width: 980px;
-    margin: 32px auto 0;
-    padding: 16px;
-    background: #ffffff;
-    border: 1px solid #d4d2d0;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(45, 45, 45, 0.1);
-}
-
-.indeed-search-panel .input-group-text {
+    margin: 28px auto 0;
+    padding: 24px 28px;
     background: #ffffff !important;
-    border-color: #767676;
+    border: 1px solid rgba(226, 232, 240, 0.9) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 12px 36px rgba(15, 23, 42, 0.08), 0 4px 12px rgba(15, 23, 42, 0.03) !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-.indeed-search-panel .form-control,
-.indeed-search-panel .form-select {
-    border-left: 0;
+.indeed-search-panel:hover,
+.search-section-card:hover {
+    box-shadow: 0 20px 48px rgba(15, 23, 42, 0.12) !important;
+    border-color: rgba(37, 99, 235, 0.3) !important;
 }
 
-.quick-search-link {
+.indeed-search-panel label,
+.search-section-card label,
+.job-search-toolbar label {
+    font-weight: 700 !important;
+    font-size: 0.875rem !important;
+    color: #0f172a !important;
+    letter-spacing: 0.01em !important;
+    margin-bottom: 0.45rem !important;
+}
+
+/* =========================================================
+   SEAMLESS SEARCH FIELD COMPONENT (NO SPLIT BORDERS)
+   ========================================================= */
+
+.search-input-box,
+.search-field {
+    position: relative !important;
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.search-input-box .search-input-icon,
+.search-field .search-icon {
+    position: absolute !important;
+    left: 16px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    z-index: 5 !important;
+    pointer-events: none !important;
+    font-size: 1.15rem !important;
+    line-height: 1 !important;
+    margin: 0 !important;
+    transition: all 0.15s ease-in-out !important;
+}
+
+.search-input-box .form-control,
+.search-input-box .search-input-control,
+.search-field .form-control,
+.search-field input[type="text"] {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding-left: 48px !important;
+    padding-right: 16px !important;
+    height: 52px !important;
+    min-height: 52px !important;
+    border-radius: 12px !important;
+    border: 1.5px solid #cbd5e1 !important;
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    font-weight: 500 !important;
+    font-size: 0.95rem !important;
+    margin: 0 !important;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04) !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.search-select-control {
+    height: 52px !important;
+    min-height: 52px !important;
+    border-radius: 12px !important;
+    border: 1.5px solid #cbd5e1 !important;
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    font-weight: 500 !important;
+    font-size: 0.95rem !important;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04) !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.search-input-box .form-control:focus,
+.search-input-box .search-input-control:focus,
+.search-field .form-control:focus,
+.search-field input[type="text"]:focus,
+.search-select-control:focus {
+    border-color: #2563eb !important;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.16), 0 4px 12px rgba(37, 99, 235, 0.08) !important;
+    background-color: #ffffff !important;
+    outline: none !important;
+}
+
+.search-input-box .form-control:hover,
+.search-field .form-control:hover,
+.search-select-control:hover {
+    border-color: #94a3b8 !important;
+}
+
+.search-input-box .form-control::placeholder,
+.search-field input[type="text"]::placeholder {
+    color: #64748b !important;
+    font-weight: 400 !important;
+}
+
+/* Elevated Primary Action Button */
+.search-btn-primary {
+    height: 52px !important;
+    border-radius: 12px !important;
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+    border: none !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    letter-spacing: 0.01em !important;
+    box-shadow: 0 8px 20px -2px rgba(37, 99, 235, 0.38) !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+}
+
+.search-btn-primary:hover {
+    background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 12px 28px -2px rgba(37, 99, 235, 0.48) !important;
+    color: #ffffff !important;
+}
+
+.search-btn-primary:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3) !important;
+}
+
+/* Quick Search Pill Badges */
+.quick-search-link,
+.search-quick-pill {
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
-    color: #2557a7;
-    font-weight: 700;
-    text-decoration: none;
+    gap: 0.4rem;
+    color: #334155 !important;
+    font-weight: 600;
+    font-size: 0.85rem;
+    background: #f1f5f9 !important;
+    border: 1px solid #e2e8f0 !important;
+    padding: 0.45rem 1.1rem;
+    border-radius: 9999px !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    text-decoration: none !important;
 }
 
-.quick-search-link:hover {
-    text-decoration: underline;
+.quick-search-link:hover,
+.search-quick-pill:hover {
+    color: #ffffff !important;
+    background: #2563eb !important;
+    border-color: #2563eb !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25) !important;
 }
 
 .job-card {

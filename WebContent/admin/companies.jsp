@@ -13,15 +13,15 @@
                 <h3 class="fw-bold text-dark mb-1">Company Verification & Account Approvals</h3>
                 <p class="text-muted mb-0">Approve pending recruiter profiles, verify enterprise details, or block non-compliant accounts</p>
             </div>
-            <form action="${pageContext.request.contextPath}/admin/companies" method="get" class="d-flex gap-2">
-                <select name="status" class="form-select rounded-pill px-3">
+            <form action="${pageContext.request.contextPath}/admin/companies" method="get" class="d-flex flex-column flex-sm-row gap-2">
+                <select name="status" class="form-select rounded-pill px-3" style="height: 48px; min-width: 180px;">
                     <option value="ALL">All Statuses</option>
                     <option value="PENDING" <%= "PENDING".equals(request.getAttribute("status")) ? "selected" : "" %>>Pending Approval</option>
                     <option value="APPROVED" <%= "APPROVED".equals(request.getAttribute("status")) ? "selected" : "" %>>Approved</option>
                     <option value="REJECTED" <%= "REJECTED".equals(request.getAttribute("status")) ? "selected" : "" %>>Rejected</option>
                     <option value="BLOCKED" <%= "BLOCKED".equals(request.getAttribute("status")) ? "selected" : "" %>>Blocked</option>
                 </select>
-                <button type="submit" class="btn btn-primary rounded-pill px-4 shadow-sm">Filter</button>
+                <button type="submit" class="btn btn-primary rounded-pill px-4 shadow-sm" style="height: 48px; white-space: nowrap;">Filter</button>
             </form>
         </div>
 

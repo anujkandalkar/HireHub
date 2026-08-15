@@ -42,9 +42,14 @@ public class StudentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(false);
-        User user = (User) session.getAttribute("user");
-        Student student = studentDAO.findByUserId(user.getId());
+        User user = (session != null) ? (User) session.getAttribute("user") : null;
 
+        if (user == null || !"STUDENT".equalsIgnoreCase(user.getRole())) {
+            resp.sendRedirect(req.getContextPath() + "/login.jsp");
+            return;
+        }
+
+        Student student = studentDAO.findByUserId(user.getId());
         if (student == null) {
             resp.sendRedirect(req.getContextPath() + "/login.jsp");
             return;
@@ -93,7 +98,7 @@ public class StudentServlet extends HttpServlet {
         for (Application app : applications) {
             String st = app.getStatus();
             if ("APPLIED".equalsIgnoreCase(st) || "UNDER_REVIEW".equalsIgnoreCase(st)) pendingCount++;
-            else if ("SHORTLISTED".equalsIgnoreCase(st) || "TASK_ASSIGNED".equalsIgnoreCase(st)) shortlistedCount++;
+            else if ("SHORTLISTED".equalsIgnoreCase(st) || "TASK_ASSIGNED".equalsIgnoreCase(st) || "INTERVIEW".equalsIgnoreCase(st)) shortlistedCount++;
             else if ("SELECTED".equalsIgnoreCase(st)) selectedCount++;
         }
 
@@ -105,6 +110,7 @@ public class StudentServlet extends HttpServlet {
         req.setAttribute("taskCount", tasks.size());
         req.setAttribute("recommendedJobs", recommendedJobs);
         req.setAttribute("applications", applications);
+        req.setAttribute("interviews", interviews);
 
         req.getRequestDispatcher("/student/dashboard.jsp").forward(req, resp);
     }

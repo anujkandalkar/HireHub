@@ -44,9 +44,14 @@ public class CompanyServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(false);
-        User user = (User) session.getAttribute("user");
-        Company company = companyDAO.findByUserId(user.getId());
+        User user = (session != null) ? (User) session.getAttribute("user") : null;
 
+        if (user == null || !"COMPANY".equalsIgnoreCase(user.getRole())) {
+            resp.sendRedirect(req.getContextPath() + "/login.jsp");
+            return;
+        }
+
+        Company company = companyDAO.findByUserId(user.getId());
         if (company == null) {
             resp.sendRedirect(req.getContextPath() + "/login.jsp");
             return;
