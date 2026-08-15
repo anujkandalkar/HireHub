@@ -3,7 +3,7 @@
 <%
     List<Application> applications = (List<Application>) request.getAttribute("applications");
     List<Job> companyJobs = (List<Job>) request.getAttribute("companyJobs");
-    request.setAttribute("pageTitle", "Applicant Management - HireHub");
+    request.setAttribute("pageTitle", "Applicant Management — HireHub");
 %>
 <jsp:include page="/includes/header.jsp" />
 
@@ -12,31 +12,31 @@
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
             <div>
                 <h3 class="fw-bold text-dark mb-1">Applicant Recruitment Pipeline</h3>
-                <p class="text-muted mb-0">Review candidate profiles, view resumes, shortlist, assign tasks, and schedule interviews</p>
+                <p class="text-muted mb-0">Review candidate profiles, inspect resumes, shortlist, assign technical tasks, and schedule interviews</p>
             </div>
 
-            <!-- Filter Controls -->
+            <!-- Job Filter Dropdown Form -->
             <form action="${pageContext.request.contextPath}/company/applications" method="get" class="d-flex gap-2">
                 <select name="jobId" class="form-select rounded-pill px-3">
-                    <option value="">All Jobs</option>
+                    <option value="">All Job Postings</option>
                     <% if (companyJobs != null) {
                         for (Job j : companyJobs) { %>
                             <option value="<%= j.getId() %>"><%= j.getTitle() %></option>
                     <%  }
                        } %>
                 </select>
-                <button type="submit" class="btn btn-primary rounded-pill px-3">Filter</button>
+                <button type="submit" class="btn btn-primary rounded-pill px-3 shadow-sm">Filter</button>
             </form>
         </div>
 
-        <div class="card border-0 shadow-sm rounded-4 bg-white overflow-hidden">
+        <div class="glass-card overflow-hidden">
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
                     <thead class="bg-light">
                         <tr>
                             <th class="ps-4">Candidate Name</th>
                             <th>Applied Position</th>
-                            <th>Applicant Resume</th>
+                            <th>Candidate Resume</th>
                             <th>Applied Date</th>
                             <th>Status</th>
                             <th class="text-end pe-4">Actions</th>
@@ -54,42 +54,40 @@
                         %>
                             <tr>
                                 <td class="ps-4">
-                                    <h6 class="fw-bold mb-0"><%= app.getStudentName() %></h6>
+                                    <h6 class="fw-bold mb-0 text-dark"><%= app.getStudentName() %></h6>
                                     <span class="small text-muted"><%= app.getStudentEmail() %> &bull; <%= app.getStudentPhone() %></span>
                                 </td>
-                                <td><%= app.getJobTitle() %></td>
+                                <td class="fw-semibold text-dark"><%= app.getJobTitle() %></td>
                                 <td>
                                     <div class="btn-group btn-group-sm" role="group">
-                                        <a href="${pageContext.request.contextPath}/resume/view?studentId=<%= app.getStudentId() %>" target="_blank" class="btn btn-outline-danger rounded-pill-start px-2 py-1" title="View Candidate Resume PDF">
+                                        <a href="${pageContext.request.contextPath}/resume/view?studentId=<%= app.getStudentId() %>" target="_blank" class="btn btn-outline-danger px-2.5 py-1" title="View Candidate Resume PDF">
                                             <i class="bi bi-file-earmark-pdf me-1"></i>View PDF
                                         </a>
-                                        <a href="${pageContext.request.contextPath}/resume/download?studentId=<%= app.getStudentId() %>" class="btn btn-outline-secondary rounded-pill-end px-2 py-1" title="Download Resume">
+                                        <a href="${pageContext.request.contextPath}/resume/download?studentId=<%= app.getStudentId() %>" class="btn btn-outline-secondary px-2.5 py-1" title="Download Resume">
                                             <i class="bi bi-download"></i>
                                         </a>
                                     </div>
                                 </td>
-                                <td><%= app.getAppliedDate() %></td>
+                                <td class="small text-muted"><%= app.getAppliedDate() %></td>
                                 <td><span class="badge <%= badgeColor %> px-3 py-1.5 rounded-pill"><%= st.replace('_', ' ') %></span></td>
                                 <td class="text-end pe-4">
                                     <div class="dropdown d-inline-block">
-                                        <button class="btn btn-sm btn-outline-primary rounded-pill dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                        <button class="btn btn-sm btn-outline-primary rounded-pill dropdown-toggle shadow-sm" type="button" data-bs-toggle="dropdown">
                                             Actions
                                         </button>
-                                        <ul class="dropdown-menu dropdown-menu-end shadow">
-                                            <!-- View Resume -->
+                                        <ul class="dropdown-menu dropdown-menu-end shadow-lg">
                                             <li>
                                                 <a href="${pageContext.request.contextPath}/resume/view?studentId=<%= app.getStudentId() %>" target="_blank" class="dropdown-item">
-                                                    <i class="bi bi-file-earmark-pdf me-2 text-danger"></i>View Applicant Resume
+                                                    <i class="bi bi-file-earmark-pdf me-2 text-danger"></i>View Candidate Resume
                                                 </a>
                                             </li>
                                             <li>
                                                 <a href="${pageContext.request.contextPath}/resume/download?studentId=<%= app.getStudentId() %>" class="dropdown-item">
-                                                    <i class="bi bi-download me-2 text-secondary"></i>Download Resume
+                                                    <i class="bi bi-download me-2 text-secondary"></i>Download Resume File
                                                 </a>
                                             </li>
-                                            <li><hr class="dropdown-divider"></li>
+                                            <li><hr class="dropdown-divider my-1"></li>
 
-                                            <!-- Shortlist -->
                                             <li>
                                                 <form action="${pageContext.request.contextPath}/update-application-status" method="post">
                                                     <input type="hidden" name="applicationId" value="<%= app.getId() %>">
@@ -98,43 +96,38 @@
                                                 </form>
                                             </li>
 
-                                            <!-- Assign Task Modal Trigger -->
                                             <li>
                                                 <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#taskModal<%= app.getId() %>">
                                                     <i class="bi bi-file-earmark-code me-2 text-primary"></i>Assign Technical Task
                                                 </button>
                                             </li>
 
-                                            <!-- Schedule Interview Modal Trigger -->
                                             <li>
                                                 <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#interviewModal<%= app.getId() %>">
                                                     <i class="bi bi-calendar-event me-2 text-info"></i>Schedule Interview
                                                 </button>
                                             </li>
 
-                                            <!-- Select -->
                                             <li>
                                                 <form action="${pageContext.request.contextPath}/update-application-status" method="post">
                                                     <input type="hidden" name="applicationId" value="<%= app.getId() %>">
                                                     <input type="hidden" name="status" value="SELECTED">
-                                                    <button type="submit" class="dropdown-item"><i class="bi bi-check-circle me-2 text-success"></i>Select / Offer</button>
+                                                    <button type="submit" class="dropdown-item"><i class="bi bi-check-circle me-2 text-success"></i>Select / Offer Position</button>
                                                 </form>
                                             </li>
 
-                                            <!-- Reject -->
                                             <li>
                                                 <form action="${pageContext.request.contextPath}/update-application-status" method="post">
                                                     <input type="hidden" name="applicationId" value="<%= app.getId() %>">
                                                     <input type="hidden" name="status" value="REJECTED">
-                                                    <button type="submit" class="dropdown-item text-danger"><i class="bi bi-x-circle me-2"></i>Reject</button>
+                                                    <button type="submit" class="dropdown-item text-danger"><i class="bi bi-x-circle me-2"></i>Reject Application</button>
                                                 </form>
                                             </li>
 
-                                            <!-- Send Message Modal Trigger -->
-                                            <li><hr class="dropdown-divider"></li>
+                                            <li><hr class="dropdown-divider my-1"></li>
                                             <li>
                                                 <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#msgModal<%= app.getId() %>">
-                                                    <i class="bi bi-envelope me-2"></i>Send Response Message
+                                                    <i class="bi bi-envelope me-2"></i>Send Message
                                                 </button>
                                             </li>
                                         </ul>
@@ -143,9 +136,9 @@
                                     <!-- TASK MODAL -->
                                     <div class="modal fade text-start" id="taskModal<%= app.getId() %>" tabindex="-1">
                                         <div class="modal-dialog">
-                                            <div class="modal-content rounded-4 border-0">
+                                            <div class="modal-content glass-card border-0 shadow-lg">
                                                 <div class="modal-header border-bottom">
-                                                    <h5 class="modal-title fw-bold">Assign Task to <%= app.getStudentName() %></h5>
+                                                    <h5 class="modal-title fw-bold text-dark"><i class="bi bi-code-slash text-primary me-2"></i>Assign Task to <%= app.getStudentName() %></h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                                 </div>
                                                 <form action="${pageContext.request.contextPath}/assign-task" method="post">
@@ -180,9 +173,9 @@
                                     <!-- INTERVIEW MODAL -->
                                     <div class="modal fade text-start" id="interviewModal<%= app.getId() %>" tabindex="-1">
                                         <div class="modal-dialog">
-                                            <div class="modal-content rounded-4 border-0">
+                                            <div class="modal-content glass-card border-0 shadow-lg">
                                                 <div class="modal-header border-bottom">
-                                                    <h5 class="modal-title fw-bold">Schedule Interview for <%= app.getStudentName() %></h5>
+                                                    <h5 class="modal-title fw-bold text-dark"><i class="bi bi-calendar-event text-info me-2"></i>Schedule Interview for <%= app.getStudentName() %></h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                                 </div>
                                                 <form action="${pageContext.request.contextPath}/schedule-interview" method="post">
@@ -198,7 +191,7 @@
                                                                 <input type="time" name="interviewTime" class="form-control" required>
                                                             </div>
                                                             <div class="col-md-6">
-                                                                <label class="form-label fw-semibold">Type</label>
+                                                                <label class="form-label fw-semibold">Interview Type</label>
                                                                 <select name="interviewType" class="form-select">
                                                                     <option value="ONLINE">Online Video</option>
                                                                     <option value="OFFLINE">In-Person Office</option>
@@ -210,11 +203,11 @@
                                                                 <input type="text" name="interviewerName" class="form-control" placeholder="Lead Engineer">
                                                             </div>
                                                             <div class="col-12">
-                                                                <label class="form-label fw-semibold">Meeting Link / Address</label>
+                                                                <label class="form-label fw-semibold">Meeting Link / Office Address</label>
                                                                 <input type="text" name="meetingLink" class="form-control" placeholder="https://meet.google.com/xyz or office room">
                                                             </div>
                                                             <div class="col-12">
-                                                                <label class="form-label fw-semibold">Notes for Candidate</label>
+                                                                <label class="form-label fw-semibold">Preparation Notes for Candidate</label>
                                                                 <textarea name="notes" class="form-control" rows="2" placeholder="Topics to prepare..."></textarea>
                                                             </div>
                                                         </div>
@@ -231,9 +224,9 @@
                                     <!-- MESSAGE MODAL -->
                                     <div class="modal fade text-start" id="msgModal<%= app.getId() %>" tabindex="-1">
                                         <div class="modal-dialog">
-                                            <div class="modal-content rounded-4 border-0">
+                                            <div class="modal-content glass-card border-0 shadow-lg">
                                                 <div class="modal-header border-bottom">
-                                                    <h5 class="modal-title fw-bold">Send Response to <%= app.getStudentName() %></h5>
+                                                    <h5 class="modal-title fw-bold text-dark"><i class="bi bi-envelope text-primary me-2"></i>Send Response to <%= app.getStudentName() %></h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                                 </div>
                                                 <form action="${pageContext.request.contextPath}/send-message" method="post">
@@ -244,7 +237,7 @@
                                                             <input type="text" name="subject" class="form-control" value="Update regarding your application for <%= app.getJobTitle() %>" required>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label class="form-label fw-semibold">Message</label>
+                                                            <label class="form-label fw-semibold">Message Body</label>
                                                             <textarea name="message" class="form-control" rows="4" required placeholder="Type your response message to candidate..."></textarea>
                                                         </div>
                                                     </div>
@@ -262,8 +255,8 @@
                            } else { %>
                             <tr>
                                 <td colspan="6" class="text-center py-5 text-muted">
-                                    <i class="bi bi-inbox fs-1 d-block mb-2 text-muted"></i>
-                                    No applications found matching your criteria.
+                                    <i class="bi bi-inbox fs-1 d-block mb-1"></i>
+                                    No candidate applications match your current criteria.
                                 </td>
                             </tr>
                         <% } %>

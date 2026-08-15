@@ -3,20 +3,20 @@
 <%
     Company company = (Company) request.getAttribute("company");
     List<Job> jobs = (List<Job>) request.getAttribute("jobs");
-    request.setAttribute("pageTitle", (company != null ? company.getCompanyName() : "Company Details") + " - HireHub");
+    request.setAttribute("pageTitle", (company != null ? company.getCompanyName() : "Company Details") + " — HireHub");
 %>
 <jsp:include page="/includes/header.jsp" />
 
 <section class="py-5 bg-light">
     <div class="container">
         <% if (company != null) { %>
-            <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white mb-4">
+            <div class="glass-card p-4 p-md-5 mb-4">
                 <div class="d-flex flex-column flex-md-row align-items-md-center gap-4">
-                    <div class="stat-icon bg-primary bg-opacity-10 text-primary fs-1 flex-shrink-0" style="width:80px; height:80px; border-radius:16px;">
+                    <div class="company-avatar" style="width: 80px; height: 80px; font-size: 2.2rem; border-radius: 20px;">
                         <i class="bi bi-building"></i>
                     </div>
                     <div class="flex-grow-1">
-                        <div class="d-flex align-items-center gap-2 mb-1">
+                        <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
                             <h2 class="fw-bold text-dark mb-0"><%= company.getCompanyName() %></h2>
                             <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3 py-1.5"><i class="bi bi-patch-check-fill me-1"></i>Approved Employer</span>
                         </div>
@@ -27,13 +27,13 @@
                     </div>
                 </div>
 
-                <hr class="my-4">
+                <hr class="my-4 border-secondary opacity-25">
 
-                <h5 class="fw-bold mb-3">About <%= company.getCompanyName() %></h5>
-                <p class="text-secondary leading-relaxed mb-0"><%= company.getDescription() %></p>
+                <h5 class="fw-bold mb-3 text-dark"><i class="bi bi-info-circle me-2 text-primary"></i>About <%= company.getCompanyName() %></h5>
+                <p class="text-secondary leading-relaxed mb-0" style="line-height: 1.7; font-size: 1rem;"><%= company.getDescription() %></p>
             </div>
 
-            <h4 class="fw-bold text-dark mb-3">Active Job Openings (<%= jobs != null ? jobs.size() : 0 %>)</h4>
+            <h4 class="fw-bold text-dark mb-3"><i class="bi bi-briefcase me-2 text-primary"></i>Active Job Openings (<%= jobs != null ? jobs.size() : 0 %>)</h4>
 
             <div class="row g-4">
                 <% if (jobs != null && !jobs.isEmpty()) { 
@@ -41,11 +41,11 @@
                         <div class="col-lg-4 col-md-6">
                             <div class="job-card">
                                 <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <h5 class="fw-bold mb-1"><a href="${pageContext.request.contextPath}/job-details?id=<%= job.getId() %>" class="text-decoration-none text-dark"><%= job.getTitle() %></a></h5>
-                                    <span class="badge bg-primary bg-opacity-10 text-primary job-badge-type"><%= job.getJobType().replace('_', ' ') %></span>
+                                    <h5 class="fw-bold mb-1"><a href="${pageContext.request.contextPath}/job-details?id=<%= job.getId() %>" class="job-title-link"><%= job.getTitle() %></a></h5>
+                                    <span class="job-badge-type"><%= job.getJobType().replace('_', ' ') %></span>
                                 </div>
-                                <div class="text-muted small mb-3"><i class="bi bi-geo-alt me-1"></i><%= job.getLocation() %></div>
-                                <div class="mb-3">
+                                <div class="text-muted small mb-3"><i class="bi bi-geo-alt me-1 text-primary"></i><%= job.getLocation() %></div>
+                                <div class="mb-3 flex-grow-1">
                                     <% if (job.getRequiredSkills() != null) {
                                         String[] skills = job.getRequiredSkills().split("[,;]");
                                         for (int s = 0; s < Math.min(skills.length, 3); s++) { %>
@@ -54,7 +54,7 @@
                                        } %>
                                 </div>
                                 <div class="mt-auto d-flex justify-content-between align-items-center pt-3 border-top">
-                                    <span class="text-success fw-bold small">$<%= (int)job.getSalaryMin() %> - $<%= (int)job.getSalaryMax() %></span>
+                                    <span class="job-pay">$<%= (int)job.getSalaryMin() %> - $<%= (int)job.getSalaryMax() %></span>
                                     <a href="${pageContext.request.contextPath}/job-details?id=<%= job.getId() %>" class="btn btn-sm btn-primary rounded-pill px-3">View Job</a>
                                 </div>
                             </div>
@@ -62,7 +62,9 @@
                 <%  }
                    } else { %>
                     <div class="col-12 text-center py-4">
-                        <p class="text-muted">This company currently has no active job postings.</p>
+                        <div class="glass-panel p-4 text-center">
+                            <p class="text-muted mb-0">This employer currently has no open job listings.</p>
+                        </div>
                     </div>
                 <% } %>
             </div>

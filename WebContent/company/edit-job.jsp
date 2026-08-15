@@ -2,7 +2,7 @@
 <%@ page import="com.hirehub.model.Job" %>
 <%
     Job job = (Job) request.getAttribute("job");
-    request.setAttribute("pageTitle", "Edit Job - HireHub");
+    request.setAttribute("pageTitle", "Edit Job — HireHub");
 %>
 <jsp:include page="/includes/header.jsp" />
 
@@ -10,8 +10,8 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-9">
-                <div class="card border-0 shadow-lg rounded-4 p-4 p-md-5 bg-white">
-                    <h3 class="fw-bold text-dark mb-4"><i class="bi bi-pencil-square me-2 text-primary"></i>Edit Job Opening</h3>
+                <div class="glass-card p-4 p-md-5">
+                    <h3 class="fw-bold text-dark mb-4"><i class="bi bi-pencil-square me-2 text-primary"></i>Edit Job Opening Details</h3>
 
                     <% if (job != null) { %>
                         <form action="${pageContext.request.contextPath}/company/edit-job" method="post">
@@ -74,7 +74,7 @@
 
                             <div class="d-flex justify-content-end gap-2">
                                 <a href="${pageContext.request.contextPath}/company/manage-jobs" class="btn btn-outline-secondary rounded-pill px-4">Cancel</a>
-                                <button type="submit" class="btn btn-primary rounded-pill px-5 fw-bold">Update Job</button>
+                                <button type="submit" class="btn btn-primary rounded-pill px-5 fw-bold shadow-glow">Update Job Opening</button>
                             </div>
                         </form>
                     <% } %>

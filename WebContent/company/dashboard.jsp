@@ -4,7 +4,7 @@
     Company company = (Company) session.getAttribute("companyProfile");
     List<Job> companyJobs = (List<Job>) request.getAttribute("companyJobs");
     List<Application> recentApps = (List<Application>) request.getAttribute("recentApplications");
-    request.setAttribute("pageTitle", "Company Dashboard - HireHub");
+    request.setAttribute("pageTitle", "Company Dashboard — HireHub Recruiter Portal");
 %>
 <jsp:include page="/includes/header.jsp" />
 
@@ -12,32 +12,41 @@
     <div class="container">
         <!-- Approval Warning Banner if Pending -->
         <% if (company != null && !"APPROVED".equalsIgnoreCase(company.getApprovalStatus())) { %>
-            <div class="alert alert-warning border-0 shadow-sm rounded-4 p-4 mb-4" role="alert">
+            <div class="alert alert-warning glass-card border-warning border-opacity-25 p-4 mb-4" role="alert">
                 <div class="d-flex align-items-center">
                     <i class="bi bi-clock-history fs-2 me-3 text-warning"></i>
                     <div>
-                        <h5 class="fw-bold mb-1">Company Status: <%= company.getApprovalStatus() %></h5>
-                        <p class="mb-0 small">Your recruiter account is currently pending Admin approval. You will be able to post jobs once an administrator approves your company profile.</p>
+                        <h5 class="fw-bold mb-1 text-dark">Recruiter Status: <%= company.getApprovalStatus() %></h5>
+                        <p class="mb-0 small text-muted">Your recruiter account is pending Admin approval. You will be able to publish job listings once an administrator approves your company profile.</p>
                     </div>
                 </div>
             </div>
         <% } %>
 
-        <!-- Welcome Banner -->
-        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
+        <!-- Welcome Hero Glass Banner -->
+        <div class="glass-card p-4 p-md-5 mb-4">
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
-                <div>
-                    <h3 class="fw-bold text-dark mb-1">Welcome, <%= company != null ? company.getCompanyName() : "Company" %>! 🏢</h3>
-                    <p class="text-muted mb-0"><%= company != null ? company.getIndustry() : "" %> &bull; <%= company != null ? company.getLocation() : "" %></p>
+                <div class="d-flex align-items-center gap-3">
+                    <div class="company-avatar" style="width: 56px; height: 56px; font-size: 1.6rem;">
+                        <i class="bi bi-building"></i>
+                    </div>
+                    <div>
+                        <h3 class="fw-bold text-dark mb-1">Welcome, <%= company != null ? company.getCompanyName() : "Employer" %>! 🏢</h3>
+                        <p class="text-muted mb-0"><i class="bi bi-tag me-1 text-primary"></i><%= company != null ? company.getIndustry() : "" %> &bull; <i class="bi bi-geo-alt me-1 text-info"></i><%= company != null ? company.getLocation() : "" %></p>
+                    </div>
                 </div>
-                <div class="d-flex gap-2">
-                    <a href="${pageContext.request.contextPath}/company/post-job" class="btn btn-primary rounded-pill px-4"><i class="bi bi-plus-lg me-1"></i>Post New Job</a>
-                    <a href="${pageContext.request.contextPath}/company/profile" class="btn btn-outline-secondary rounded-pill px-3">Company Profile</a>
+                <div class="d-flex flex-wrap gap-2">
+                    <a href="${pageContext.request.contextPath}/company/post-job" class="btn btn-primary rounded-pill px-4 shadow-sm">
+                        <i class="bi bi-plus-lg me-1"></i>Post New Job
+                    </a>
+                    <a href="${pageContext.request.contextPath}/company/profile" class="btn btn-outline-primary rounded-pill px-3">
+                        <i class="bi bi-building me-1"></i>Company Profile
+                    </a>
                 </div>
             </div>
         </div>
 
-        <!-- Dashboard Cards -->
+        <!-- Metric Stat Cards -->
         <div class="row g-4 mb-4">
             <div class="col-md-2 col-6">
                 <div class="stat-card">
@@ -83,11 +92,11 @@
             </div>
         </div>
 
-        <!-- Recent Applicants Table -->
-        <div class="card border-0 shadow-sm rounded-4 bg-white overflow-hidden">
+        <!-- Recent Applicants Table Card -->
+        <div class="glass-card overflow-hidden">
             <div class="p-4 border-bottom d-flex justify-content-between align-items-center">
-                <h5 class="fw-bold text-dark mb-0">Recent Candidate Applications</h5>
-                <a href="${pageContext.request.contextPath}/company/applications" class="small text-primary fw-semibold text-decoration-none">View All Applicants &rarr;</a>
+                <h5 class="fw-bold text-dark mb-0"><i class="bi bi-people me-2 text-primary"></i>Recent Candidate Applications</h5>
+                <a href="${pageContext.request.contextPath}/company/applications" class="small text-primary fw-semibold text-decoration-none">Manage All Applicants &rarr;</a>
             </div>
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
@@ -105,20 +114,25 @@
                             for (Application app : recentApps) { %>
                                 <tr>
                                     <td class="ps-4">
-                                        <h6 class="fw-bold mb-0"><%= app.getStudentName() %></h6>
+                                        <h6 class="fw-bold mb-0 text-dark"><%= app.getStudentName() %></h6>
                                         <span class="small text-muted"><%= app.getStudentEmail() %></span>
                                     </td>
-                                    <td><%= app.getJobTitle() %></td>
-                                    <td><%= app.getAppliedDate() %></td>
-                                    <td><span class="badge bg-primary px-3 py-1.5 rounded-pill"><%= app.getStatus() %></span></td>
+                                    <td class="fw-semibold text-dark"><%= app.getJobTitle() %></td>
+                                    <td class="small text-muted"><%= app.getAppliedDate() %></td>
+                                    <td><span class="badge bg-primary bg-opacity-10 text-primary px-3 py-1.5 rounded-pill"><%= app.getStatus() %></span></td>
                                     <td class="text-end pe-4">
-                                        <a href="${pageContext.request.contextPath}/company/applications" class="btn btn-sm btn-outline-primary rounded-pill">Manage Application</a>
+                                        <a href="${pageContext.request.contextPath}/company/applications" class="btn btn-sm btn-outline-primary rounded-pill px-3">
+                                            Manage Candidate
+                                        </a>
                                     </td>
                                 </tr>
                         <%  }
                            } else { %>
                             <tr>
-                                <td colspan="5" class="text-center py-4 text-muted">No applications received yet.</td>
+                                <td colspan="5" class="text-center py-4 text-muted">
+                                    <i class="bi bi-inbox d-block fs-2 mb-1"></i>
+                                    No candidate applications received yet.
+                                </td>
                             </tr>
                         <% } %>
                     </tbody>

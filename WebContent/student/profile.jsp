@@ -4,37 +4,37 @@
     Student student = (Student) request.getAttribute("student");
     if (student == null) student = (Student) session.getAttribute("studentProfile");
     Resume resume = student != null ? student.getResume() : null;
-    request.setAttribute("pageTitle", "My Profile - HireHub");
+    request.setAttribute("pageTitle", "Candidate Profile — HireHub");
 %>
 <jsp:include page="/includes/header.jsp" />
 
 <section class="py-5 bg-light">
     <div class="container">
         <div class="row g-4">
-            <!-- Sidebar Navigation -->
+            <!-- Profile Navigation Sidebar -->
             <div class="col-lg-3">
-                <div class="card border-0 shadow-sm rounded-4 p-4 bg-white text-center">
-                    <div class="stat-icon bg-primary bg-opacity-10 text-primary mx-auto mb-3 fs-1 rounded-circle d-flex align-items-center justify-content-center" style="width:72px; height:72px;">
+                <div class="glass-card p-4 text-center sticky-lg-top" style="top: 90px;">
+                    <div class="company-avatar mx-auto mb-3" style="width:72px; height:72px; font-size:2rem;">
                         <i class="bi bi-person-fill"></i>
                     </div>
-                    <h5 class="fw-bold mb-1"><%= student != null && student.getFullName() != null ? student.getFullName() : "Student Profile" %></h5>
+                    <h5 class="fw-bold mb-1 text-dark"><%= student != null && student.getFullName() != null ? student.getFullName() : "Candidate Profile" %></h5>
                     <p class="text-muted small mb-3"><%= student != null && student.getEmail() != null ? student.getEmail() : "" %></p>
-                    <span class="badge bg-primary bg-opacity-10 text-primary mb-3">Profile Completion: <%= student != null ? student.getProfileCompletionPercentage() : 20 %>%</span>
+                    <span class="badge bg-primary bg-opacity-10 text-primary mb-3">Completion Score: <%= student != null ? student.getProfileCompletionPercentage() : 20 %>%</span>
 
                     <div class="list-group list-group-flush text-start border-top pt-3">
-                        <a href="#personal-sec" class="list-group-item list-group-item-action border-0 fw-semibold text-primary"><i class="bi bi-person me-2"></i>Personal Info</a>
+                        <a href="#personal-sec" class="list-group-item list-group-item-action border-0 fw-semibold text-primary"><i class="bi bi-person me-2"></i>Personal Details</a>
                         <a href="#education-sec" class="list-group-item list-group-item-action border-0 fw-semibold text-dark"><i class="bi bi-journal-bookmark me-2"></i>Education</a>
-                        <a href="#skills-sec" class="list-group-item list-group-item-action border-0 fw-semibold text-dark"><i class="bi bi-stars me-2"></i>Skills</a>
-                        <a href="#resume-sec" class="list-group-item list-group-item-action border-0 fw-semibold text-dark"><i class="bi bi-file-earmark-pdf me-2"></i>Resume</a>
+                        <a href="#skills-sec" class="list-group-item list-group-item-action border-0 fw-semibold text-dark"><i class="bi bi-stars me-2"></i>Skills & Competencies</a>
+                        <a href="#resume-sec" class="list-group-item list-group-item-action border-0 fw-semibold text-dark"><i class="bi bi-file-earmark-pdf me-2"></i>Resume Management</a>
                     </div>
                 </div>
             </div>
 
-            <!-- Profile Editor -->
+            <!-- Main Editor Area -->
             <div class="col-lg-9">
                 <!-- Personal Info Card -->
-                <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white mb-4" id="personal-sec">
-                    <h4 class="fw-bold text-dark mb-4"><i class="bi bi-person-vcard me-2 text-primary"></i>Personal Information</h4>
+                <div class="glass-card p-4 p-md-5 mb-4" id="personal-sec">
+                    <h4 class="fw-bold text-dark mb-4"><i class="bi bi-person-vcard me-2 text-primary"></i>Personal & Academic Information</h4>
                     <form action="${pageContext.request.contextPath}/student/profile-update" method="post">
                         <div class="row g-3">
                             <div class="col-md-6">
@@ -58,7 +58,7 @@
                                 <input type="date" name="dob" class="form-control" value="<%= student != null && student.getDob() != null ? student.getDob() : "" %>">
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label fw-semibold">CGPA / Score</label>
+                                <label class="form-label fw-semibold">CGPA / Grade Score</label>
                                 <input type="number" step="0.01" name="cgpa" class="form-control" value="<%= student != null ? student.getCgpa() : 0.0 %>">
                             </div>
                             <div class="col-md-6">
@@ -79,23 +79,23 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-semibold">Graduation Year</label>
-                                <input type="number" name="graduationYear" class="form-control" value="<%= student != null ? student.getGraduationYear() : 2024 %>">
+                                <input type="number" name="graduationYear" class="form-control" value="<%= student != null ? student.getGraduationYear() : 2025 %>">
                             </div>
                             <div class="col-12">
                                 <label class="form-label fw-semibold">Professional Summary / Bio</label>
-                                <textarea name="bio" class="form-control" rows="3"><%= student != null && student.getBio() != null ? student.getBio() : "" %></textarea>
+                                <textarea name="bio" class="form-control" rows="3" placeholder="Briefly describe your career focus..."><%= student != null && student.getBio() != null ? student.getBio() : "" %></textarea>
                             </div>
                             <div class="col-12 text-end mt-3">
-                                <button type="submit" class="btn btn-primary rounded-pill px-4">Save Personal Info</button>
+                                <button type="submit" class="btn btn-primary rounded-pill px-4 shadow-sm">Save Personal Info</button>
                             </div>
                         </div>
                     </form>
                 </div>
 
                 <!-- Skills Card -->
-                <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white mb-4" id="skills-sec">
+                <div class="glass-card p-4 p-md-5 mb-4" id="skills-sec">
                     <h4 class="fw-bold text-dark mb-3"><i class="bi bi-stars me-2 text-warning"></i>Technical Skills</h4>
-                    <p class="text-muted small mb-3">Skills are used by HireHub smart recommendation engine to calculate job compatibility scores.</p>
+                    <p class="text-muted small mb-3">Skills are used by HireHub recommendation algorithms to calculate match percentages on active job postings.</p>
                     
                     <form action="${pageContext.request.contextPath}/student/skills-update" method="post">
                         <div class="mb-3">
@@ -112,22 +112,22 @@
                         </div>
 
                         <div class="text-end">
-                            <button type="submit" class="btn btn-primary rounded-pill px-4">Update Skills</button>
+                            <button type="submit" class="btn btn-primary rounded-pill px-4 shadow-sm">Update Skills</button>
                         </div>
                     </form>
                 </div>
 
                 <!-- Resume Card -->
-                <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white" id="resume-sec">
+                <div class="glass-card p-4 p-md-5" id="resume-sec">
                     <h4 class="fw-bold text-dark mb-3"><i class="bi bi-file-earmark-pdf me-2 text-danger"></i>Resume Management</h4>
-                    <p class="text-muted small mb-4">View, download, or update your uploaded resume (PDF, DOC, or DOCX format, max 5 MB).</p>
+                    <p class="text-muted small mb-4">View, download, or replace your resume document (PDF, DOC, or DOCX, max 5 MB).</p>
 
                     <% if (resume != null && resume.getFileName() != null) { %>
-                        <div class="p-3 bg-light rounded-3 d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-4 border g-3">
+                        <div class="p-3 glass-panel rounded-3 d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-4 border g-3">
                             <div class="d-flex align-items-center mb-2 mb-md-0">
                                 <i class="bi bi-file-earmark-pdf-fill fs-1 text-danger me-3"></i>
                                 <div>
-                                    <h6 class="fw-bold mb-0"><%= resume.getFileName() %></h6>
+                                    <h6 class="fw-bold mb-0 text-dark"><%= resume.getFileName() %></h6>
                                     <span class="small text-muted">Uploaded: <%= resume.getUploadedAt() != null ? resume.getUploadedAt() : "Active" %></span>
                                 </div>
                             </div>
@@ -136,12 +136,12 @@
                                     <i class="bi bi-eye me-1"></i>View Resume
                                 </a>
                                 <a href="${pageContext.request.contextPath}/resume/download?studentId=<%= student.getId() %>" class="btn btn-primary btn-sm rounded-pill px-3">
-                                    <i class="bi bi-download me-1"></i>Download Resume
+                                    <i class="bi bi-download me-1"></i>Download
                                 </a>
                             </div>
                         </div>
                     <% } else { %>
-                        <div class="alert alert-warning border-0 rounded-3 mb-4">
+                        <div class="alert alert-warning border-0 rounded-3 mb-4 glass-card border-warning border-opacity-25">
                             <i class="bi bi-exclamation-triangle-fill me-2"></i>No resume uploaded yet. Please upload your resume below.
                         </div>
                     <% } %>
@@ -153,7 +153,7 @@
                             <div class="text-danger small mt-1" id="profileResumeError" style="display:none;"></div>
                         </div>
                         <div class="text-end">
-                            <button type="submit" class="btn btn-primary rounded-pill px-4"><i class="bi bi-upload me-1"></i><%= (resume != null) ? "Replace Resume" : "Upload Resume" %></button>
+                            <button type="submit" class="btn btn-primary rounded-pill px-4 shadow-sm"><i class="bi bi-upload me-1"></i><%= (resume != null) ? "Replace Resume" : "Upload Resume" %></button>
                         </div>
                     </form>
                 </div>

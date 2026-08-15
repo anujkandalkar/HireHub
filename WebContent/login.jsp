@@ -1,25 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<% request.setAttribute("pageTitle", "Login - HireHub Job Portal"); %>
+<% request.setAttribute("pageTitle", "Login — HireHub Recruitment Portal"); %>
 <jsp:include page="/includes/header.jsp" />
 
 <section class="py-5 bg-light auth-page">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-lg-5 col-md-7">
-                <div class="card border-0 shadow-lg rounded-4 p-4 p-md-5 bg-white">
+            <div class="col-lg-5 col-md-7 col-sm-10">
+                <div class="glass-card p-4 p-md-5">
                     <div class="text-center mb-4">
-                        <div class="stat-icon bg-primary bg-opacity-10 text-primary mx-auto mb-3 fs-3" style="width:64px; height:64px;">
-                            <i class="bi bi-person-lock"></i>
+                        <div class="company-avatar mx-auto mb-3" style="width:64px; height:64px; font-size:1.6rem; background: rgba(37,99,235,0.12);">
+                            <i class="bi bi-person-lock text-primary"></i>
                         </div>
                         <h3 class="fw-bold text-dark mb-1">Welcome Back</h3>
-                        <p class="text-muted small">Sign in to access your HireHub account</p>
+                        <p class="text-muted small">Sign in to your HireHub candidate or recruiter account</p>
                     </div>
 
                     <form action="${pageContext.request.contextPath}/login" method="post" autocomplete="off">
                         <div class="mb-3">
                             <label class="form-label fw-semibold">Email Address</label>
                             <div class="input-group">
-                                <span class="input-group-text bg-light"><i class="bi bi-envelope"></i></span>
+                                <span class="input-group-text bg-white"><i class="bi bi-envelope text-primary"></i></span>
                                 <input type="email" name="email" class="form-control" placeholder="name@example.com" value="<%= request.getAttribute("email") != null ? request.getAttribute("email") : "" %>" autocomplete="off" required>
                             </div>
                         </div>
@@ -30,24 +30,22 @@
                                 <a href="#" class="small text-decoration-none text-primary">Forgot password?</a>
                             </div>
                             <div class="input-group">
-                                <span class="input-group-text bg-light"><i class="bi bi-key"></i></span>
-                                <input type="password" name="password" id="loginPassword" class="form-control" placeholder="Enter your password" autocomplete="new-password" required>
+                                <span class="input-group-text bg-white"><i class="bi bi-key text-primary"></i></span>
+                                <input type="password" name="password" id="loginPassword" class="form-control" placeholder="Enter password" autocomplete="new-password" required>
                                 <button type="button" class="btn btn-outline-secondary" id="toggleLoginPassword" aria-label="Show password">
                                     <i class="bi bi-eye"></i>
                                 </button>
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary w-100 py-2.5 rounded-3 fw-bold fs-6 mb-3">
+                        <button type="submit" class="btn btn-primary w-100 py-2.5 rounded-3 fw-bold fs-6 mb-3 shadow-glow">
                             <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
                         </button>
 
                         <div class="text-center text-muted small mt-3">
-                            Don't have an account? <a href="${pageContext.request.contextPath}/register.jsp" class="fw-bold text-primary text-decoration-none">Register Now</a>
+                            Don't have an account? <a href="${pageContext.request.contextPath}/register.jsp" class="fw-bold text-primary text-decoration-none">Create Account</a>
                         </div>
                     </form>
-
-
                 </div>
             </div>
         </div>

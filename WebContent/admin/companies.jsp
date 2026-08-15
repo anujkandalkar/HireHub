@@ -2,7 +2,7 @@
 <%@ page import="com.hirehub.model.Company, java.util.List" %>
 <%
     List<Company> companies = (List<Company>) request.getAttribute("companies");
-    request.setAttribute("pageTitle", "Admin - Company Management");
+    request.setAttribute("pageTitle", "Company Verification & Management — HireHub");
 %>
 <jsp:include page="/includes/header.jsp" />
 
@@ -10,8 +10,8 @@
     <div class="container">
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
             <div>
-                <h3 class="fw-bold text-dark mb-1">Company Approval & Management</h3>
-                <p class="text-muted mb-0">Approve pending company registrations, verify employers, or block accounts</p>
+                <h3 class="fw-bold text-dark mb-1">Company Verification & Account Approvals</h3>
+                <p class="text-muted mb-0">Approve pending recruiter profiles, verify enterprise details, or block non-compliant accounts</p>
             </div>
             <form action="${pageContext.request.contextPath}/admin/companies" method="get" class="d-flex gap-2">
                 <select name="status" class="form-select rounded-pill px-3">
@@ -21,11 +21,11 @@
                     <option value="REJECTED" <%= "REJECTED".equals(request.getAttribute("status")) ? "selected" : "" %>>Rejected</option>
                     <option value="BLOCKED" <%= "BLOCKED".equals(request.getAttribute("status")) ? "selected" : "" %>>Blocked</option>
                 </select>
-                <button type="submit" class="btn btn-primary rounded-pill px-4">Filter</button>
+                <button type="submit" class="btn btn-primary rounded-pill px-4 shadow-sm">Filter</button>
             </form>
         </div>
 
-        <div class="card border-0 shadow-sm rounded-4 bg-white overflow-hidden">
+        <div class="glass-card overflow-hidden">
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
                     <thead class="bg-light">
@@ -33,7 +33,7 @@
                             <th class="ps-4">Company Name</th>
                             <th>Email Address</th>
                             <th>Industry</th>
-                            <th>Location</th>
+                            <th>HQ Location</th>
                             <th>Status</th>
                             <th>Reg Date</th>
                             <th class="text-end pe-4">Approval Actions</th>
@@ -62,7 +62,7 @@
                                             <form action="${pageContext.request.contextPath}/admin/company-action" method="post" class="d-inline">
                                                 <input type="hidden" name="companyId" value="<%= c.getId() %>">
                                                 <input type="hidden" name="action" value="APPROVE">
-                                                <button type="submit" class="btn btn-sm btn-success rounded-pill px-3"><i class="bi bi-check-lg me-1"></i>Approve</button>
+                                                <button type="submit" class="btn btn-sm btn-success rounded-pill px-3 shadow-sm"><i class="bi bi-check-lg me-1"></i>Approve</button>
                                             </form>
                                         <% } %>
 
@@ -78,20 +78,20 @@
                                             <form action="${pageContext.request.contextPath}/admin/company-action" method="post" class="d-inline">
                                                 <input type="hidden" name="companyId" value="<%= c.getId() %>">
                                                 <input type="hidden" name="action" value="BLOCK">
-                                                <button type="submit" class="btn btn-sm btn-outline-warning rounded-circle" title="Block"><i class="bi bi-slash-circle"></i></button>
+                                                <button type="submit" class="btn btn-sm btn-outline-warning rounded-circle d-flex align-items-center justify-content-center" style="width:34px; height:34px;" title="Block"><i class="bi bi-slash-circle"></i></button>
                                             </form>
                                         <% } else if ("BLOCKED".equalsIgnoreCase(st)) { %>
                                             <form action="${pageContext.request.contextPath}/admin/company-action" method="post" class="d-inline">
                                                 <input type="hidden" name="companyId" value="<%= c.getId() %>">
                                                 <input type="hidden" name="action" value="UNBLOCK">
-                                                <button type="submit" class="btn btn-sm btn-outline-success rounded-circle" title="Unblock"><i class="bi bi-check-circle"></i></button>
+                                                <button type="submit" class="btn btn-sm btn-outline-success rounded-circle d-flex align-items-center justify-content-center" style="width:34px; height:34px;" title="Unblock"><i class="bi bi-check-circle"></i></button>
                                             </form>
                                         <% } %>
 
-                                        <form action="${pageContext.request.contextPath}/admin/company-action" method="post" class="d-inline" onsubmit="return confirm('Delete this company account?')">
+                                        <form action="${pageContext.request.contextPath}/admin/company-action" method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this company account?')">
                                             <input type="hidden" name="companyId" value="<%= c.getId() %>">
                                             <input type="hidden" name="action" value="DELETE">
-                                            <button type="submit" class="btn btn-sm btn-outline-danger rounded-circle" title="Delete"><i class="bi bi-trash"></i></button>
+                                            <button type="submit" class="btn btn-sm btn-outline-danger rounded-circle d-flex align-items-center justify-content-center" style="width:34px; height:34px;" title="Delete"><i class="bi bi-trash"></i></button>
                                         </form>
                                     </div>
                                 </td>
